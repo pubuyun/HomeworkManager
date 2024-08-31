@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="First.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Label
+                Text="Homeworks"
+                HorizontalOptions="Start"
+                TextColor="Purple"
+                FontSize="24"
+                FontAttributes="Bold"
+             />
+            <Button 
+                Text="+ Add Homework"
+                BackgroundColor="Purple"
+                TextColor="White"
+                Clicked="OnAddClicked"
+            />
+            <ListView x:Name="HomeworkListView" ItemTapped="OnHomeworkTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BorderColor="Purple" CornerRadius="5" Padding="10" Margin="5" VerticalOptions="StartAndExpand">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextColor="Purple" FontAttributes="Bold" FontSize="18"/>
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Text}" TextColor="Black"/>
+                                    <Button Grid.Row="1" Grid.Column="1" Text="Complete" BackgroundColor="Purple" TextColor="White" Clicked="OnCompleteClicked"/>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
