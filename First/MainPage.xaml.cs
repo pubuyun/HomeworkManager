@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.VisualBasic;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,6 +13,15 @@ namespace First
             public int Id { get; set; }
             public string Title { get; set; }
             public string Text { get; set; }
+            public DateTime DueDate { get; set; }
+            public List<string> Due
+            {
+                get
+                {
+                    var daysRemaining = (DueDate - DateTime.Today).Days;
+                    return [daysRemaining > 0 ? $"{daysRemaining} days left" : "Due today", daysRemaining > 1 ? $"Green" : "Red"];
+                }
+            }
         }
 
         public class HomeworkList
@@ -20,7 +30,7 @@ namespace First
             public List<Homework> Homeworks { get; set; } = new List<Homework>();
         }
 
-        private string _fileName = Path.Combine(FileSystem.AppDataDirectory, "homework.json");
+        private string _fileName = Path.Combine(Microsoft.Maui.Storage.FileSystem.AppDataDirectory, "homework.json");
         private HomeworkList _homeworkList;
 
         public MainPage()
@@ -79,6 +89,11 @@ namespace First
         private async void LoadHomeworks()
         {
             _homeworkList = await LoadHomeworksAsync();
+            _homeworkList.Homeworks.Sort((x, y) => DateTime.Compare(x.DueDate, y.DueDate));
+            for (int i = 0; i < _homeworkList.Count; i++)
+            {
+                _homeworkList.Homeworks[i].Id = i;
+            }
             HomeworkListView.ItemsSource = _homeworkList.Homeworks;
         }
 

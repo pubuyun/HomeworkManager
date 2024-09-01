@@ -8,10 +8,13 @@
             x:Name="TitleEditor"
             Placeholder="Enter title"
          />
-        <Editor x:Name="TextEditor"
-                Placeholder="Enter homework details"
-                HeightRequest="100" />
-
+        <Editor 
+            x:Name="TextEditor"
+            Placeholder="Enter homework details"
+            HeightRequest="100" />
+        <DatePicker 
+        x:Name="DueDatePicker"
+        Date="{Binding DueDate}"/>  
         <Grid ColumnDefinitions="*,*" ColumnSpacing="4">
             <Button Text="Save"
                     Clicked="SaveButton_Clicked" />

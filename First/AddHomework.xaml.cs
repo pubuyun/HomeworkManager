@@ -17,12 +17,15 @@ namespace First
             _homeworkList = homeworkList;
             ID = id;
             InitializeComponent();
+            DueDatePicker.MinimumDate = DateTime.Today;
+            DueDatePicker.MaximumDate = DateTime.Today.AddDays(30);
             if (_homeworkList != null)
                 if (_homeworkList.Count > 0 && id>=0)
                 {
                     {
                         TitleEditor.Text = _homeworkList.Homeworks[id].Title;
                         TextEditor.Text = _homeworkList.Homeworks[id].Text;
+                        DueDatePicker.Date = _homeworkList.Homeworks[id].DueDate;
                     }
                 }
         }
@@ -31,8 +34,8 @@ namespace First
         private async void SaveButton_Clicked(object sender, EventArgs e)
         {
             // Save the file.
-            if (ID == -1) Add_Homework(TitleEditor.Text, TextEditor.Text);
-            else SaveHomework(TitleEditor.Text, TextEditor.Text, ID);
+            if (ID == -1) Add_Homework(TitleEditor.Text, TextEditor.Text, DueDatePicker.Date);
+            else SaveHomework(TitleEditor.Text, TextEditor.Text, DueDatePicker.Date, ID);
             await Navigation.PushAsync(new MainPage());
         }
 
@@ -102,19 +105,21 @@ namespace First
             // DisplayHomeworks();
         }
 
-        private async void Add_Homework(string title, string text)
+        private async void Add_Homework(string title, string text, DateTime dueDate)
         {
-            var newHomework = new Homework { Id = _homeworkList.Count, Title = title, Text = text };
+            var newHomework = new Homework { Id = _homeworkList.Count, Title = title, Text = text, DueDate = dueDate };
             _homeworkList.Homeworks.Add(newHomework);
             _homeworkList.Count = _homeworkList.Homeworks.Count;
             await SaveHomeworksAsync(_homeworkList);
         }
-        private async void SaveHomework(string title, string text, int id)
+        private async void SaveHomework(string title, string text, DateTime dueDate, int id)
         {
             _homeworkList.Homeworks[id].Title = title;
             _homeworkList.Homeworks[id].Text = text;
+            _homeworkList.Homeworks[id].DueDate = dueDate; // Update the due date
+            await SaveHomeworksAsync(_homeworkList);
         }
-  
+
         protected override async void OnDisappearing()
         {
             base.OnDisappearing();

@@ -35,6 +35,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" TextColor="Purple" FontAttributes="Bold" FontSize="18"/>
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Due[0]}" TextColor="{Binding Due[1]}" FontAttributes="Bold" FontSize="20"/>
                                         <Label Grid.Row="1" Grid.Column="0" Text="{Binding Text}" TextColor="Black"/>
                                         <Button Grid.Row="1" Grid.Column="1" Text="Complete" BackgroundColor="Purple" TextColor="White" Clicked="OnCompleteClicked"/>
                                     </Grid>     
